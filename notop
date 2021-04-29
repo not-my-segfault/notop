@@ -1,0 +1,65 @@
+#!/usr/bin/env bash
+
+if [ "$1" -eq "$1" ] 1>&- 2>&-
+then
+	echo ""
+	ps -dacrv | head -n $(($1+1))
+	echo ""
+fi
+
+if [ "$1" == "kill" ]
+then
+	pkill $2
+	if [ "$?" == "0" ]
+	then
+		echo ""
+		echo "> successfully killed $2"
+		echo ""
+	else
+		echo ""
+		echo "> couldn't kill $2 , check spelling or try again"
+		echo ""
+	fi
+fi
+
+if [ "$1" == "info" ]
+then
+	echo ""
+	ps -p $(pgrep $2) -o pid,%cpu,%mem
+	echo ""
+fi
+
+if [ "$1" == "sysinfo" ]
+then
+	echo ""
+	uptime
+	echo ""
+	sumcores=$(ps -eo %cpu | tr '\n' '+' | sed 's/+  / + /g' | sed 's/%CPU +//g' | cut -c1- | sed 's/.$//' | bc)
+	echo "> cpu: $(echo "$sumcores / $(getconf _NPROCESSORS_ONLN)" | bc)%"
+	echo "> ram: $(ps -eo %mem | tr '\n' '+' | sed 's/+  / + /g' | sed 's/%MEM+//g' | cut -c1- | sed 's/.$//' | bc)%"
+	echo "> total active processes: $(echo "$(ps aux | wc -l) - 1" | bc)"
+	echo ""	
+fi
+
+if [ "$1" == "" ]
+then
+	echo ""
+	echo "> no subcommands specified, check \"notop help\" and try again"
+	echo ""
+fi
+
+if [ "$1" == "help" ]
+then
+	echo ""
+	echo "> usage:"
+	echo ""
+	echo "notop x"
+	echo "notop info/kill process"
+	echo "notop sysinfo"
+	echo ""
+	echo "\"x\" - amount of processes to list"
+	echo "\"info\" - show information on a process"
+	echo "\"kill\" - kill a process"
+	echo "\"sysinfo\" - display general system info (total cpu%, mem%, load etc."
+	echo ""
+fi

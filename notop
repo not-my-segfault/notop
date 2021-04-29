@@ -34,7 +34,7 @@ then
 	echo ""
 	uptime
 	echo ""
-	sumcores=$(ps -eo %cpu | tr '\n' '+' | sed 's/+  / + /g' | sed 's/%CPU +//g' | cut -c1- | sed 's/.$//' | bc)
+	sumcores=$(ps -eo %cpu | tr '\n' '+' | sed 's/+  / + /g' | sed 's/%CPU +//g' | sed 's/%CPU+//g'  | cut -c1- | sed 's/.$//' | bc)
 	echo "> cpu: $(echo "$sumcores / $(getconf _NPROCESSORS_ONLN)" | bc)%"
 	echo "> ram: $(ps -eo %mem | tr '\n' '+' | sed 's/+  / + /g' | sed 's/%MEM+//g' | cut -c1- | sed 's/.$//' | bc)%"
 	echo "> total active processes: $(echo "$(ps aux | wc -l) - 1" | bc)"

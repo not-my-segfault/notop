@@ -2,9 +2,9 @@
 
 how the hell does `top` work anyways?
 
-and other questions every linux/unix users has asked themselves at least once
+and other questions every linux/unix user has asked themselves at least once
 
-simple solution: `notop`
+the simple solution? `notop`
 
 ![](screenshot.png)
 
@@ -27,7 +27,6 @@ its as simple as it is efficient. most top commands are just *clunky*. and it us
 # dependencies
 
 - either doas or sudo (for `install.sh` (or just run `install.sh` as root))
-
 - ps
 - tr
 - sed

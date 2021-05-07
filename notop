@@ -43,7 +43,7 @@ fi
 if [ "$1" == "sysinfo" ]
 then
 	echo ""
-	uptime
+	uptime | sed 's/^ *//g'
 	echo ""
 	sumcores=$(ps -eo %cpu | tr '\n' '+' | sed 's/+  / + /g' | sed 's/%CPU +//g' | sed 's/%CPU+//g'  | cut -c1- | sed 's/.$//' | bc)
 	echo "> cpu: $(echo "$sumcores / $(getconf _NPROCESSORS_ONLN)" | bc)% across $(getconf _NPROCESSORS_ONLN) logical core(s)"
